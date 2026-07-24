@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  EMPLOYEE
+  MANAGER
+  HR_ADMIN
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Employee {
+  id                Int      @id @default(autoincrement())
+  name              String
+  email             String   @unique
+  password          String
+  role              Role     @default(EMPLOYEE)
+  department        String?
+  salary            Decimal  @db.Decimal(10, 2)
+  isActive          Boolean  @default(true)
+  profilePictureUrl String?
+  managerId         Int?
+  manager           Employee?  @relation("ManagerEmployees", fields: [managerId], references: [id])
+  subordinates      Employee[] @relation("ManagerEmployees")
+  leaveRequests     LeaveRequest[] @relation("EmployeeLeaves")
+  approvedLeaves    LeaveRequest[] @relation("ApproverLeaves")
+  refreshTokens     RefreshToken[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("employees")
+}
+
+model RefreshToken {
+  id         Int      @id @default(autoincrement())
+  token      String   @unique
+  employeeId Int
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  @@map("refresh_tokens")
+}
+
+model LeaveRequest {
+  id          Int         @id @default(autoincrement())
+  employeeId  Int
+  employee    Employee    @relation("EmployeeLeaves", fields: [employeeId], references: [id])
+  startDate   DateTime
+  endDate     DateTime
+  status      LeaveStatus @default(PENDING)
+  approvedBy  Int?
+  approver    Employee?   @relation("ApproverLeaves", fields: [approvedBy], references: [id])
+  createdAt   DateTime    @default(now())
+
+  @@index([employeeId])
+  @@map("leave_requests")
+}

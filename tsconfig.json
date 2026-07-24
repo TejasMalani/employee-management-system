@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "CommonJS",
-    "moduleResolution": "node10",
+    "moduleResolution": "Node10",
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
@@ -11,14 +11,19 @@
     "forceConsistentCasingInFileNames": true,
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
+    "types": ["node", "jest"],
     "paths": {
       "@config/*": ["src/config/*"],
       "@controllers/*": ["src/controllers/*"],
       "@services/*": ["src/services/*"],
       "@repositories/*": ["src/repositories/*"],
       "@middlewares/*": ["src/middlewares/*"],
+      "@routes/*": ["src/routes/*"],
       "@utils/*": ["src/utils/*"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["src/types/*"],
+      "@database/*": ["src/database/*"],
+      "@validations/*": ["src/validations/*"],
+      "@logger/*": ["src/logger/*"]
     }
   },
   "include": ["src"]

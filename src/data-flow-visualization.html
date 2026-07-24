@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Flow Visualization</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+        .flow-diagram { max-width: 800px; margin: 0 auto; border: 2px solid #ccc; padding: 20px; background: white; }
+        .step { border: 3px dashed #007bff; padding: 15px; margin: 15px 0; background: #e9f5ff; }
+        .arrow { display: inline-block; width: 20px; height: 20px; border: 3px solid #007bff; border-radius: 50%; background: #007bff; position: relative; top: 3px; }
+        .arrow::after { content: "→"; font-size: 20px; position: absolute; left: 5px; top: 0; }
+        .client { background: #d4edda; color: #155724; }
+        .api { background: #fff3cd; color: #856404; }
+        .db { background: #ffeeba; color: #663300; }
+        .animated { transition: opacity 1s ease; }
+        .highlight { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <h2>Data Flow When Hitting an API</h2>
+    <div class="flow-diagram">
+        <div class="step client animated" style="opacity: 1;">
+            <div class="arrow"></div>
+            <h3>User Input</h3>
+            <p>User submits data through a form or interface. This is the starting point of the flow.</p>
+        </div>
+        <div class="step api animated" style="opacity: 0.8;">
+            <div class="arrow"></div>
+            <h3>API Request</h3>
+            <p>Frontend sends data to the backend API endpoint (e.g., /api/data). This is handled by Express.js.</p>
+        </div>
+        <div class="step db animated" style="opacity: 0.6;">
+            <div class="arrow"></div>
+            <h3>Prisma (Database Query)</h3>
+            <p>Prisma ORM translates the API request into a database query. It abstracts database interactions.</p>
+        </div>
+        <div class="step " animated" style="opacity: 1;">
+            <h3>API Response</h3>
+            <p>Database returns data via Prisma. API formats the response (JSON) and sends it back to the client.</p>
+        </div>
+    </div>
+
+    <h3>Explanation of Key Tools (From package.json)</h3>
+    <ul>
+        <li><strong>Prisma</strong>: An ORM for Node.js that simplifies database interactions. It maps your data models to your database, making queries easier and safer.</li>
+        <li><strong>Husky</strong>: A pre-commit hook that runs scripts automatically before code is committed. It ensures tests pass or formatting is correct before saving changes.</li>
+        <li><strong>Express.js</strong>: A web framework that handles API routes and server logic. It manages incoming requests and outgoing responses.</li>
+        <li><strong>Node.js</strong>: The runtime environment that executes JavaScript on the server side. It allows server-side logic and API creation.</li>
+        <li><strong>Axios/Fetch</strong>: Used to make HTTP requests from the frontend to the backend API.</li>
+    </ul>
+</body>
+</html>
