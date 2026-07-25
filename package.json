@@ -5,12 +5,12 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/app.ts",
     "build": "tsc && tsc-alias",
-    "start": "node -r tsconfig-paths/register dist/app.js",
+    "start": "node dist/app.js",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --forceExit",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --runInBand"
+    "test:coverage": "jest --coverage --runInBand --forceExit"
   },
   "keywords": [],
   "author": "",
